@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <style>
+            h3{
+            font-family: Calibri; 
+            font-size: 25pt;         
+            font-style: normal; 
+            font-weight: bold; 
+            color:SlateBlue;
+            text-align: center; 
+            text-decoration: underline
+            }
+            table{
+            font-family: Calibri; 
+            color:white; 
+            font-size: 11pt; 
+            font-style: normal;
+            font-weight: bold;
+            text-align:; 
+            background-color: rgb(20, 10, 87); 
+            border-collapse: collapse; 
+            border: 2px solid rgb(19, 19, 20)
+            }
+            table.inner{
+            border: 0px
+            }
+        </style>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{category}}">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}    
+                </div>
+            {% endfor %}
+        {% endwith %}
+        <table align="center" cellpadding = "15" width="600">
+            <h3>Edit Employee</h3>
+            <form action="{{url_for('home_url.edit_employee', id=user_id)}}" method="POST">
+            {{ form.csrf_token }}
+            <!-- ------------------name------------------------------------------- -->
+            <tr>
+                <td>{{form.name.label}}</td>
+                <td>
+                    {{form.name()}}
+                </td>
+            </tr>
+            {% if form.name.errors %}
+            <tr>
+                {% for error in form.errors.name %}
+                <td class="text-danger">{{error}}</td>
+                {% endfor %}
+            </tr>
+            {% endif %}
+            <!-- ------------------email------------------------------------------- -->
+            <tr>
+                <td>{{form.email.label}}</td>
+                <td>
+                    {{form.email}}
+                </td>
+            </tr>
+            {% if form.email.errors %}
+            <tr>
+                {% for error in form.errors.email %}
+                <td class="text-danger">{{error}}</td>
+                {% endfor %}
+            </tr>
+            {% endif %}
+            <!-- ------------------phone number------------------------------------------- -->
+            <tr>
+                <td>{{form.phone_number.label}}</td>
+                <td>
+                    {{form.phone_number}}
+                </td>
+            </tr>
+            {% if form.phone_number.errors %}
+            <tr>
+                {% for error in form.errors.phone_number %}
+                <td class="text-danger">{{error}}</td>
+                {% endfor %}
+            </tr>
+            {% endif %}
+            <!------------------------designation---------------------------------------------->
+            <tr>
+                <td>{{form.designation.label}}</td>
+                <td>
+                    {{form.designation}}
+                </td>
+            </tr>
+            {% if form.designation.errors %}
+            <tr>
+                {% for error in form.errors.designation %}
+                <td class="text-danger">{{error}}</td>
+                {% endfor %}
+            </tr>
+            {% endif %}
+            <!------------------------department---------------------------------------------->
+            <tr>
+                <td>{{form.department.label}}</td>
+                <td>
+                    {{form.department}}
+                </td>
+            </tr>
+            {% if form.department.errors %}
+            <tr>
+                {% for error in form.errors.department %}
+                <td class="text-danger">{{error}}</td>
+                {% endfor %}
+            </tr>
+            {% endif %}
+            <!------------------------manager---------------------------------------------->
+            <tr>
+                <td>{{form.manager.label}}</td>
+                <td>
+                    {{form.manager}}
+                </td>
+            </tr>
+            {% if form.manager.errors %}
+            <tr>
+                {% for error in form.errors.manager %}
+                <td class="text-danger">{{error}}</td>
+                {% endfor %}
+            </tr>
+            {% endif %}
+
+
+            <tr>
+                <td>
+                    <button><a href="{{url_for('home_url.dashboard')}}">goback</a></button>
+                </td>
+                <td>
+                    {{form.submit}}
+                    <input class="btn btn-danger"type="reset" value="Reset">
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

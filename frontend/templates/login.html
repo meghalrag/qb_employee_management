@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <style>
+            h3{
+            font-family: Calibri; 
+            font-size: 25pt;         
+            font-style: normal; 
+            font-weight: bold; 
+            color:SlateBlue;
+            text-align: center; 
+            text-decoration: underline
+            }
+            table{
+            font-family: Calibri; 
+            color:white; 
+            font-size: 11pt; 
+            font-style: normal;
+            font-weight: bold;
+            text-align:; 
+            background-color: rgb(20, 10, 87); 
+            border-collapse: collapse; 
+            border: 2px solid rgb(19, 19, 20)
+            }
+            table.inner{
+            border: 0px
+            }
+        </style>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{category}}">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}    
+                </div>
+            {% endfor %}
+        {% endwith %}
+        <table align="center" cellpadding = "15" width="600">
+            <h3>Login Here</h3>
+            <form action="{{url_for('home_url.login')}}" method="POST">
+            {{ form.csrf_token }}
+            <!-- ------------------email------------------------------------------- -->
+            <tr>
+                <td>{{form.email_or_phone.label}}</td>
+                <td>
+                    {{form.email_or_phone}}
+                </td>
+            </tr>
+            {% if form.email_or_phone.errors %}
+            <tr>
+                {% for error in form.errors.email_or_phone %}
+                <td class="text-danger">{{error}}</td>
+                {% endfor %}
+            </tr>
+            {% endif %}
+            <!------------------------password---------------------------------------------->
+            <tr>
+                <td>{{form.password.label}}</td>
+                <td>
+                    {{form.password}}
+                </td>
+            </tr>
+            {% if form.password.errors %}
+            <tr>
+                {% for error in form.errors.password %}
+                <td class="text-danger">{{error}}</td>
+                {% endfor %}
+            </tr>
+            {% endif %}
+            <tr>
+                <td>
+                    <button><a href="{{url_for('home_url.home')}}">goback</a></button>
+                </td>
+                <td>
+                    {{form.submit}}
+                    <input class="btn btn-danger"type="reset" value="Reset">
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Employee Management</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <div class="row" style="padding:10%;">
+  <div class="col-md-8">
+    <a class="btn btn-primary float-right" href="{{url_for('home_url.export_employee', id=user_id, type='csv')}}" target="_blank">export to csv</a>
+    <a class="btn btn-primary float-right" href="{{url_for('home_url.export_employee', id=user_id, type='xlsx')}}" target="_blank">export to excel</a>
+    <a class="btn btn-primary float-right" href="{{url_for('home_url.export_employee', id=user_id, type='json')}}" target="_blank">export to json</a>
+  </div>
+  <div class="col-md-4">
+    <a class="btn btn-danger float-right" href="{{url_for('home_url.dashboard')}}">goback</a>
+  </div>
+  </div>
+  <h2>Complete Details</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><b>Employee ID:</b>{{user.emp_id}}</li>
+    <li class="list-group-item"><b>Name:</b>{{user.name}}</li>
+    <li class="list-group-item"><b>Email:</b>{{user.email}}</li>
+    <li class="list-group-item"><b>Phone Number:</b>{{user.phone_number}}</li>
+    <li class="list-group-item"><b>Role:</b>{{user.role}}</li>
+    <li class="list-group-item"><b>Designation:</b>{{user.designation}}</li>
+    <li class="list-group-item"><b>Department:</b>{{user.department}}</li>
+    <li class="list-group-item"><b>Manager:</b>{{user.manager}}</li>
+    <li class="list-group-item"><b>Hired Date:</b>{{user.hired_date}}</li>
+  </ul>
+</div>
+
+</body>
+</html>

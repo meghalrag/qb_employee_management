@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Employee Management</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <style>
+        .container {
+        padding: 2rem 0rem;
+        }
+        h4 {
+        margin: 2rem 0rem 1rem;
+        }
+        .table-image {
+        td, th {
+        vertical-align: middle;
+        }
+        }
+    </style>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{category}}">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}    
+                </div>
+            {% endfor %}
+        {% endwith %}
+        <div class="container">
+            {% if current_user %}
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">LoggedIn by {{current_user.email}}</h4>
+                        <p class="card-text">Phone number: {{current_user.phone_number}}</p>
+                        <p class="card-text">Role: {{session['user_role']}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>All Employees and Managers</h2>
+                </div>
+                <div class="col-md-4">
+                {% if session['user_role'] == "manager" %}
+                    <a class="btn btn-primary" href="{{url_for('home_url.add_employee')}}">Create Employee</a>
+                {% endif %}
+                    <a class="btn btn-primary" href="{{url_for('home_url.logout')}}">Logout</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {% if users %}
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Employee ID</th>
+                                <th scope="col">Employee Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in users %}
+                            <tr>
+                                <th scope="row">{{i.emp_id}}</th>
+                                <td>{{i.name}}</td>
+                                <td>{{i.email}}</td>
+                                <td>{{i.role}}</td>
+                                <td>{{i.phone_number}}</td>
+                                <td>
+                                    <a type="button" class="btn btn-primary" href="{{url_for('home_url.view_employee', id=i.user_id)}}"><i class="fa fa-eye"></i></a>
+                                    {% if session["user_role"] == "manager" %}
+                                        <a type="button" class="btn btn-success" href="{{url_for('home_url.edit_employee', id=i.user_id)}}"><i class="fa fa-edit"></i></a>
+                                        {% if  i.role == "employee" %}
+                                            <a type="button" class="btn btn-danger employee-delete" href="{{url_for('home_url.delete_employee', id=i.user_id)}}"><i class="fa fa-trash"></i></a>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <thead>No records found</thead>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        $('.employee-delete').click(function(e){
+            if (!confirm('Are you sure about deleting this employee?')) {
+                e.preventDefault()
+            }
+        })
+    </script>
+</html>

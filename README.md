@@ -119,8 +119,8 @@ All set to go:sunglasses::v:
 ### IMPORTANT NOTE:
 
 _There is a variable STORAGE_PATH in both backend and frontend (in backend => export_handler line 7 and in frontend => config.py line 3),
-The path specified in it should be accessible to both frontend and backend.If you face any issue in here change the existing path with an
-accessible path in your system._ 
+The path specified in it should be accessible to both frontend and backend.Otherwise you need to change this path with an accessible path
+in your system._
 
 ## Authors
 

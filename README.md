@@ -132,3 +132,4 @@ in your system._
 1. My inspiration and More Tutorials [here](https://dev.to/paurakhsharma/flask-rest-api-part-0-setup-basic-crud-api-4650).
 2. Flask JWT Extended [Documentation](https://flask-jwt-extended.readthedocs.io/en/stable/)
 for _Role-Based Access Control_ (RBAC).
+3. Casbin RBAC Model [Documentation](https://casbin.org/docs/rbac/)

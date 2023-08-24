@@ -23,7 +23,7 @@ department_choices = [
 
 manager_choices = [
     ('0', "No Manager"),
-    ('meghalrag@123.com', "meghalrag@123.com")
+    ('manager@123.com', "manager@123.com")
 ]
 
 class SignupForm(FlaskForm):

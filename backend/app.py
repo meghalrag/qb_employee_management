@@ -61,7 +61,7 @@ if not user:
     login.hash_password()
     login.emp_id = len(User.objects.all())+1
     login.save()
-    prof = UserProfile(name="Meghal", email="manager@123.com", phone_number="9999999999", designation="manager", department="All", manager="No Manager")
+    prof = UserProfile(name="Main Manager", email="manager@123.com", phone_number="9999999999", designation="manager", department="All", manager="No Manager")
     prof.user = login
     prof.save()
 

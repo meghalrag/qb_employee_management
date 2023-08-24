@@ -55,9 +55,9 @@ initialize_db(app)
 initialize_routes(api)
 
 # Manager account initialization for first uses
-user = User.objects(username='meghalrag@123.com')
+user = User.objects(username='manager@123.com')
 if not user:
-    login = User(username='meghalrag@123.com', phone_number="9999999999", password='123', roles=['manager'])
+    login = User(username='manager@123.com', phone_number="9999999999", password='123', roles=['manager'])
     login.hash_password()
     login.emp_id = len(User.objects.all())+1
     login.save()

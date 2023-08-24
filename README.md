@@ -112,7 +112,7 @@ password
 123
 ```
 ***This is a defualt manager that creates first time when you run the backend appliaction.
-If you would like to change the default manager data then in the backend/app.py line 60 and 64 make your desired changes.***
+If you would like to change the default manager data then in the backend/app.py line 58, 60 and 64 make your desired changes.***
 
 All set to go:sunglasses::v:
 

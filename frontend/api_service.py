@@ -24,7 +24,7 @@ def create_emp_api(params:dict):
     return format_api_res(response)
 
 
-def get_all_users_api(id=None):
+def get_all_users_api(id=None, filters = {}):
     headers = {
         'accept': 'application/json',
         'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ def get_all_users_api(id=None):
     if id:
         response = requests.get(f'{API_URL}/api/user/{id}', headers=headers)
     else:
-        response = requests.get(f'{API_URL}/api/user', headers=headers)
+        response = requests.get(f'{API_URL}/api/user', headers=headers, json=filters)
     return format_api_res(response)
 
 
@@ -84,4 +84,14 @@ def logout_api():
         'Authorization': f'Bearer {session.get("access_token")}'
     }
     response = requests.post(f'{API_URL}/api/logout', headers=headers)
+    return format_api_res(response)
+
+
+def get_all_roles():
+    headers = {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {session.get("access_token")}'
+    }
+    response = requests.get(f'{API_URL}/api/roles', headers=headers)
     return format_api_res(response)

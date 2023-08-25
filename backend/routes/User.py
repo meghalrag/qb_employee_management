@@ -15,7 +15,12 @@ class User2Api(Resource):
     def get(self):
         res = []
         try:
-            users = UserProfile.objects().all()
+            filters = request.get_json()
+            if filters:
+                users = User.objects.filter(**filters)
+                users = UserProfile.objects.filter(user__in=users)
+            else:
+                users = UserProfile.objects.all()
             for each in users:
                 temp = {}
                 temp["user_id"] = str(each.user.id)
@@ -156,5 +161,16 @@ class ExportEmpDataAPI(Resource):
                 file_id = export_to_json_and_save(prof)
             UserFileMapping(user=user_data, file_id=str(file_id)).save()
             return {"message": "Data Exported Successfully"}, 200
+        except Exception as err:
+            return {"error": "Internal Server Error"}, 500
+        
+
+class GetAllRolesAPI(Resource):
+    @jwt_required
+    def get(self):
+        from middleware.casbin_middleware import casbin_enforcer
+        try:
+            roles = list(set(casbin_enforcer.get_all_named_subjects("p")))
+            return {"roles": roles}, 200
         except Exception as err:
             return {"error": "Internal Server Error"}, 500

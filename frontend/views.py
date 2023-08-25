@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, session, send_file
+from flask import render_template, redirect, url_for, flash, session, request, send_file
 from flask_login import current_user, login_user
 from flask.views import MethodView
 from forms import SignupForm, LoginForm, EmployeeEditForm
@@ -98,12 +98,26 @@ class DashboardView(MethodView):
             role = my_data["role"][0]
             session["user_role"] = role
 
-        res = get_all_users_api()
+        roles = get_all_roles()
+        if roles["status_code"] == 200:
+            roles = roles["data"]["roles"]
+        else:
+            roles = []
+        selected_role = request.args.get('role')
+        filters = {}
+        if selected_role:
+            filters.update({"roles":selected_role})
+        # If a role is selected, query the database with the role filter
+        # if selected_role:
+        #     users = collection.find({'role': selected_role})
+        # else:
+        #     users = collection.find()
+        res = get_all_users_api(filters=filters)
         if res and res["status_code"] == 403:#permission only for get
             users_data = {}
         else:
             users_data = res["data"]
-        return render_template('dashboard.html', users = users_data, current_user=my_data)
+        return render_template('dashboard.html', users = users_data, current_user=my_data, roles=roles, selected_role=selected_role)
     
 
 class ViewEmployeeView(MethodView):

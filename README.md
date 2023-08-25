@@ -2,6 +2,8 @@
 
 This application has the ability to manage employees based on their role.
 
+![EMS](ems.png)
+
 
 ## Getting Started
 

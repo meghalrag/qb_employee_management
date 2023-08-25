@@ -41,6 +41,4 @@ curl -X POST localhost:5000/api/login -d '{"username":"manager@123.com", "passwo
 
 You can find the swagger documentation of the api endpoints here:
 
-```
-http://127.0.0.1:5000/api/docs
-```
+[Swagger API Documentation](http://127.0.0.1:5000/api/docs)

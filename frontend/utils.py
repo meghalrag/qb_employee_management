@@ -1,4 +1,12 @@
 def format_api_res(response):
+    """Method to format the api response into a common one.
+
+    Args:
+        response (Object): Api response
+
+    Returns:
+        response: Formatted response.
+    """
     res = {}
     res["status_code"] = response.status_code
     if response.status_code == 204:
@@ -11,12 +19,3 @@ def format_api_res(response):
             res_json["error"] = res_json["message"]
         res.update(res_json)
     return res
-
-def export_to_csv(data):
-    pass
-
-def export_to_xlsx(data):
-    pass
-
-def export_to_json(data):
-    pass

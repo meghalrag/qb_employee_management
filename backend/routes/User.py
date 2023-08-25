@@ -13,6 +13,15 @@ from common.export_helper import export_to_csv_and_save, export_to_json_and_save
 class User2Api(Resource):
     @jwt_required
     def get(self):
+        """
+        Endpoint: api/user
+        Method: GET
+        Description: Retrieve a list of all employee users.
+        Response:
+        - 200 OK: Successful. Returns a list of employee users with their details.
+        - 401 Unauthorized: No Authorization Error.
+        - 500 Internal Server Error: All other errors.
+        """
         res = []
         try:
             filters = request.get_json()
@@ -38,12 +47,29 @@ class User2Api(Resource):
             res = json.dumps(res)
             return Response(res, mimetype='application/json', status=200)
         except NoAuthorizationError:
-            return {"error": "No Authorization Error"}, 400
+            return {"error": "No Authorization Error"}, 401
         except Exception:
             return {"error": "Internal Server Error"}, 500
 
     @jwt_required
     def post(self):
+        """
+        Endpoint: api/user
+        Method: POST
+        Description: Create a new employee user.
+        Request Body:
+        - name: (string) Employee's name.
+        - email: (string) Employee's email.
+        - phone number: (string) Employee's phone.
+        - password: (string) Employee's password.
+        - designation: (string) Employee's designation.
+        - department: (string) Employee's department.
+        - manager: (string) Employee's manager.
+        Response:
+        - 201 Created: Employee creation successful.
+        - 400 Bad Request: Schema Validation Error/Email/Phone Number AlreadyExists Error.
+        - 500 Internal Server Error: All other errors.
+        """
         try:
             body = request.get_json()
             user_schema = {
@@ -73,6 +99,13 @@ class User2Api(Resource):
 class UserApi(Resource):
     @jwt_required
     def get(self, id):
+        """
+        Endpoint: api/user/<id>
+        Method: GET
+        Description: Retrieve the details of a perticular employee user.
+        Response:
+        - 200 OK: Successful. Returns a list of employee user with the details.
+        """
         res = []
         try:
             user = User.objects().get(id=id)
@@ -97,6 +130,16 @@ class UserApi(Resource):
         
     @jwt_required
     def delete(self, id):
+        """
+        Endpoint: api/user/<id>
+        Method: DELETE
+        Description: Delete a specific employee user.
+        URL Parameters:
+        - id: (string) ID of the employee user to be deleted.
+        Response:
+        - 204 No Content: Deletion successful.
+        - 404 Not Found: Employee user not found.
+        """
         try:
             user = User.objects().get(id=id)
             UserProfile.objects.get(user=user).delete()
@@ -109,6 +152,24 @@ class UserApi(Resource):
 
     @jwt_required
     def put(self, id):
+        """
+        Endpoint: api/user/<id>
+        Method: PUT
+        Description: Update details of a specific employee user.
+        URL Parameters:
+        - id: (string) ID of the employee user to be updated.
+        Request Body:
+        - name: (string) Employee's name.
+        - email: (string) Employee's email.
+        - phone number: (string) Employee's phone.
+        - designation: (string) Employee's designation.
+        - department: (string) Employee's department.
+        - manager: (string) Employee's manager.
+        Response:
+        - 204 No Content: Update successful.
+        - 400 Bad Request: SchemaValidationError/UpdatingUserError.
+        - 500 Internal Server Error: All other errors.
+        """
         try:
             user = User.objects.get(id=id)
             body = request.get_json()
@@ -122,16 +183,14 @@ class UserApi(Resource):
             return {"error": "Internal Server Error"}, 500
         
 
-class CheckPermissionAPI(Resource):
-    @jwt_required
-    def get(self):
-        try:
-            return Response({"msg": "Permitted"}, status=200)
-        except Exception:
-            raise InternalServerError
-        
-
 class GetCurrentUserAPI(Resource):
+    """
+    Endpoint: api/user/me
+    Method: GET
+    Description: Retrieve the details of the loggedin user.
+    Response:
+    - 200 OK: Successful. Returns the details of loggedin user.
+    """
     @jwt_required
     def get(self):
         try:
@@ -148,6 +207,17 @@ class GetCurrentUserAPI(Resource):
         
 
 class ExportEmpDataAPI(Resource):
+    """
+    Endpoint: api/user/export/<id>/<type>
+    Method: GET
+    Description: Export employee details in various formats (CSV, XLSX, JSON).
+    URL Parameters:
+    - id: (string) ID of the employee user whose details are to be exported.
+    - type: (string) Format in which to export data (csv, xlsx, json).
+    Response:
+    - 200 OK: Export successful. Returns the employee details in the specified format.
+    - 500 Internal: Employee export error.
+    """
     @jwt_required
     def get(self, id, type):
         try:
@@ -166,6 +236,14 @@ class ExportEmpDataAPI(Resource):
         
 
 class GetAllRolesAPI(Resource):
+    """
+    Endpoint: api/roles
+    Method: GET
+    Description: Retrieve all the roles.
+    Response:
+    - 200 OK: Successful. Returns list of roles available in the applicaion.
+    - 500 Internal: All errors.
+    """
     @jwt_required
     def get(self):
         from middleware.casbin_middleware import casbin_enforcer

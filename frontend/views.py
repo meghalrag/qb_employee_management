@@ -9,10 +9,18 @@ from config import STORAGE_PATH
 
 
 def home():
+    """
+    URL: / or /home
+    Description: Home page of the application.
+    """
     return render_template('home.html')
 
 
 class LoginView(MethodView):
+    """
+    URL: /login
+    Description: User login page allowing GET (rendering) and POST (authentication) methods.
+    """
     def get(self):
         form = LoginForm()
         return render_template('login.html', form=form)
@@ -56,6 +64,10 @@ class LogoutView(MethodView):
             
 
 class AddEmployeeView(MethodView):
+    """
+    URL: /employee/add
+    Description: Page for adding a new employee, available through GET (rendering) and POST (employee creation) methods.
+    """
     decorators = [token_required]
 
     def get(self):
@@ -84,6 +96,10 @@ class AddEmployeeView(MethodView):
         
 
 class DashboardView(MethodView):
+    """
+    URL: /dashboard
+    Description: Dashboard page displaying Employees information based on the role, accessible through a GET request.
+    """
     decorators = [token_required]
 
     def get(self):
@@ -121,6 +137,12 @@ class DashboardView(MethodView):
     
 
 class ViewEmployeeView(MethodView):
+    """
+    URL: /employee/view/<id>
+    Description: Page to view details of a specific employee, accessed via a GET request.
+    URL Parameters:
+    - id: ID of the employee whose details are being viewed.
+    """
     decorators = [token_required]
 
     def get(self, id):
@@ -133,6 +155,12 @@ class ViewEmployeeView(MethodView):
     
 
 class EditEmployeeView(MethodView):
+    """
+    URL: /employee/edit/<id>
+    Description: Page for editing employee details, accessible through GET (rendering) and POST (employee details update) methods.
+    URL Parameters:
+    - id: ID of the employee whose details are being edited.
+    """
     decorators = [token_required]
 
     def get(self, id):
@@ -167,6 +195,12 @@ class EditEmployeeView(MethodView):
         
 
 class DeleteEmployeeView(MethodView):
+    """
+    URL: /employee/delete/<id>
+    Description: Page for deleting an employee, available through a GET request.
+    URL Parameters:
+    - id: ID of the employee to be deleted.
+    """
     decorators = [token_required]
 
     def get(self, id):
@@ -181,6 +215,13 @@ class DeleteEmployeeView(MethodView):
     
 
 class ExportEmployeeView(MethodView):
+    """
+    URL: /employee/export/<id>/<type>
+    Description: Page to export employee details in various formats (CSV, XLSX, JSON), accessible via a GET request.
+    URL Parameters:
+    - id: ID of the employee whose details are being exported.
+    - type: Format in which to export data (csv, xlsx, json).
+    """
     decorators = [token_required]
 
     def get(self, id, type):

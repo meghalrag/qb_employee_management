@@ -1,6 +1,7 @@
 import re
  
 def is_valid_email_phone_field(value):
+    """validator can be used for both phone and email"""
      
     # 1) Begins with 0 or 91
     # 2) Then contains 6,7 or 8 or 9.

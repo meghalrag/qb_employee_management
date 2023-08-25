@@ -13,7 +13,17 @@ from models.User import User, TokenBlacklist
 
 # Class Login API to load in Routes
 class LoginApi(Resource):
-    # Function to Login with HTTP POST Method
+    """
+    Endpoint: api/login
+    Method: POST
+    Description: Authenticate a user and generate a session token for API access.
+    Request Body:
+    - email_or_phone: (string) User's email/phone number.
+    - password: (string) User's password.
+    Response:
+    - 200 OK: Successful authentication. Returns a session token.
+    - 401 Unauthorized: Invalid credentials.
+    """
     def post(self):
         try:
             # get body (json) from client request
@@ -42,7 +52,16 @@ class LoginApi(Resource):
         
 
 class LogoutAPI(Resource):
-    #function to logout and black list token
+    """
+    Endpoint: api/logout
+    Method: POST
+    Description: Invalidate the current session token, logging out the user.
+    Request Headers:
+    - Authorization: (string) Session token.
+    Response:
+    - 200 OK: Logout successful.
+    - 401 Unauthorized: Invalid session token.
+    """
     @jwt_required
     def post(self):
         try:

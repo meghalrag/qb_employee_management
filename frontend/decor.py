@@ -3,10 +3,12 @@ from flask import session, jsonify, redirect, url_for, flash
 from config import JWT_SECRET_KEY
 
 def token_required(func):
+    """decorator to verify the token in every request"""
     def wrapper(*args, **kwargs):
         token = session.get("access_token")
         if not token:
-            return jsonify({'message': 'Token is missing'}), 401
+            flash("Your token is missing / expired. Please login again", "danger")
+            return redirect(url_for("home_url.login"))
         
         try:
             _ = jwt.decode(token, JWT_SECRET_KEY, algorithms=['HS256'])
